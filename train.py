@@ -13,14 +13,21 @@ def train():
     num_epochs = 10
     batch_size = 32
     learning_rate = 3e-4  # ViT typically uses a higher learning rate
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
+
+    # Automatically detect device (Mac MPS, CUDA, or CPU)
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")  # MacBook GPU (Metal)
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")  # NVIDIA GPU
+    else:
+        device = torch.device("cpu")  # Default to CPU
+
+    print(f"Using device: {device}")  # Confirm which device is used
 
     # Load data
     train_loader, val_loader = get_dataloaders(
         batch_size=batch_size,
-        image_size=224,
-        num_workers=4
+        image_size=224
     )
 
     # Initialize ViT model

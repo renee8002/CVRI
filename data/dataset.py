@@ -35,16 +35,22 @@ class CIFAR10Dataset:
             transform=self.transform
         )
 
-    def get_dataloader(self, batch_size=64, shuffle=True, num_workers=4):
+    def get_dataloader(self, batch_size=64, shuffle=True, num_workers=None):
+        # Automatically set num_workers based on OS and device
         if num_workers is None:
-            num_workers = 0 if os.name == "nt" or "darwin" in os.sys.platform else 4
+            if torch.backends.mps.is_available():  # If using MacBook GPU (MPS)
+                num_workers = 0  # MPS does not support multiprocessing well
+            elif torch.cuda.is_available():  # If using CUDA GPU (Linux)
+                num_workers = 4  # Enable multiprocessing
+            else:  # Windows or CPU mode
+                num_workers = 0  # Prevent multiprocessing issues on Windows/macOS
 
         return DataLoader(
             self.dataset,
             batch_size=batch_size,
             shuffle=shuffle,
             num_workers=num_workers,
-            pin_memory=True
+            pin_memory=True if torch.cuda.is_available() else False  # Pin memory for CUDA only
         )
 
 
