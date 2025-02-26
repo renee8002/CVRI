@@ -14,6 +14,7 @@ def train():
     batch_size = 32
     learning_rate = 3e-4  # ViT typically uses a higher learning rate
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
 
     # Load data
     train_loader, val_loader = get_dataloaders(
