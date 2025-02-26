@@ -20,7 +20,7 @@ def train():
     train_loader, val_loader = get_dataloaders(
         batch_size=batch_size,
         image_size=224,
-        num_workers=0
+        num_workers=4
     )
 
     # Initialize ViT model
