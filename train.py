@@ -94,7 +94,7 @@ def train():
         val_accs.append(val_acc)
         print(f"Epoch [{epoch+1}/{num_epochs}] - Val Loss: {val_losses[-1]:.4f}, Val Acc: {val_acc:.4f}")
 
-        scheduler.step()
+        scheduler.step(val_losses[-1])
 
     # Save the trained model
     save_model(model, "vit_cifar10.pth")
