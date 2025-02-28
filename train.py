@@ -11,8 +11,8 @@ from utils.visualization import plot_training_curves
 def train():
     # Hyperparameters
     num_epochs = 10
-    batch_size = 32
-    learning_rate = 3e-4  # ViT typically uses a higher learning rate
+    batch_size = 64
+    learning_rate = 1e-3  # ViT typically uses a higher learning rate
 
     # Automatically detect device (Mac MPS, CUDA, or CPU)
     if torch.backends.mps.is_available():
@@ -40,7 +40,9 @@ def train():
     # Define loss function and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.1)
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+    # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+    # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=num_epochs)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3) #如果 val loss 停滞，学习率会自动减少 50%
 
     # Lists to store training and validation metrics
     train_losses, val_losses, train_accs, val_accs = [], [], [], []
