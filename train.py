@@ -11,8 +11,8 @@ from utils.visualization import plot_training_curves
 def train():
     # Hyperparameters
     num_epochs = 10
-    batch_size = 64
-    learning_rate = 5e-4  # ViT typically uses a higher learning rate
+    batch_size = 32
+    learning_rate = 1e-4  # ViT typically uses a higher learning rate
 
     # Automatically detect device (Mac MPS, CUDA, or CPU)
     if torch.backends.mps.is_available():
