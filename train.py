@@ -11,7 +11,7 @@ from utils.visualization import plot_training_curves
 def train():
     # Hyperparameters
     num_epochs = 10
-    batch_size = 128
+    batch_size = 32
     learning_rate = 3e-4  # ViT typically uses a higher learning rate
 
     # Automatically detect device (Mac MPS, CUDA, or CPU)
