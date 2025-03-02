@@ -10,7 +10,7 @@ from utils.visualization import plot_training_curves
 
 def train():
     # Hyperparameters
-    num_epochs = 10
+    num_epochs = 15
     batch_size = 32
     learning_rate = 1e-4  # ViT typically uses a higher learning rate
 
@@ -39,8 +39,8 @@ def train():
 
     # Define loss function and optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.05)
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+    optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.03)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.5)
     # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=num_epochs)
     # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3) #如果 val loss 停滞，学习率会自动减少 50%
 
